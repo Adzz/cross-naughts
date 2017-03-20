@@ -24,8 +24,6 @@ class Board
     free_positions.count == 0 || winning_board_for?("X") || winning_board_for?("O")
   end
 
-  private
-
   def winning_board_for?(player)
     WINNING_LINES.any? do |line|
       state.values_at(*line) == [player, player, player]
