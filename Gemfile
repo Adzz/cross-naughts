@@ -6,6 +6,7 @@ gem "curses"
 
 group :development, :test do
   gem "pry"
+  gem "rake"
 end
 
 group :test do
