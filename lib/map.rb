@@ -3,12 +3,12 @@ class Map
     @board = board
   end
 
-  def paths
-    paths = []
+  def routes
+    routes = []
     board.free_positions.each_with_index do |_pos, index|
-      paths << [*0.. (board.free_positions.count - (index + 1))]
+      routes << [*0.. (board.free_positions.count - (index + 1))]
     end
-    paths.first.product(*paths[1..-1])
+    routes.first.product(*routes[1..-1])
   end
 
   private

@@ -1,8 +1,8 @@
 RSpec.describe Map do
   context '1 X 1 board' do
-    it 'should map 1 unique path' do
+    it 'should map 1 unique route' do
       game_map = Map.new(Board.new(state: [0]))
-      expect(game_map.paths.uniq.count).to eq 1
+      expect(game_map.routes.uniq.count).to eq 1
     end
   end
 
@@ -36,22 +36,21 @@ RSpec.describe Map do
       ]
     end
 
-    it 'should map 128 unique paths' do
+    it 'should map 128 unique routes' do
       game_map = Map.new(Board.new(state: [0,1,2,3]))
-      expect(game_map.paths.uniq.count).to eq 24
+      expect(game_map.routes.uniq.count).to eq 24
     end
 
     it 'should map return every combination of path available' do
       game_map = Map.new(Board.new(state: [0,1,2,3]))
-      expect(game_map.paths.sort).to eq result
+      expect(game_map.routes.sort).to eq result
     end
   end
 
   context '3 X 3 board' do
-    it 'should map 362880 unique paths' do
+    it 'should map 362880 unique routes' do
       game_map = Map.new(Board.new(state: [0,1,2,3,4,5,6,7,8]))
-      binding.pry
-      expect(game_map.paths.uniq.count).to eq 362880
+      expect(game_map.routes.uniq.count).to eq 362880
     end
   end
 end
