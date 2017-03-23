@@ -27,6 +27,10 @@ class GameState
     active_player == "O" ? "X" : "O"
   end
 
+  def free_spaces
+    board.free_positions.count
+  end
+
   private
 
   def game_over?

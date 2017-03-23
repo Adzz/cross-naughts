@@ -1,58 +1,75 @@
 require_relative './map.rb'
 
 class GameTree
-  attr_reader :game_tree
-
   def initialize(game_state)
     @game_state = game_state
-    @game_tree = []
     @routes = Map.new(@game_state.board).routes
   end
 
+  def games
+    @routes.map do |route|
+      route.each.with_index.with_object([]) do |(move, index), games|
+        games << tree[index][move]
+      end
+    end
+  end
+
   def tree
-    @routes.each_with_object([]) do |route, paths|
-      game_states = [
-        @game_state.children[route.first]
-      ]
-
-      route.drop(1).each do |game_state_location|
-        first_game_state = game_states.pop
-        game_states.push(first_game_state)
-        next_game_state = first_game_state.children[game_state_location]
-        game_states.push(next_game_state)
-      end
-    end
+    @tree ||= [
+      game_state.children,
+      grand_children,
+      great_grand_children,
+      great_great_grand_children,
+      great_great_great_grand_children,
+      great_great_great_great_grand_children,
+      great_great_great_great_great_grand_children,
+      great_great_great_great_great_great_grand_children,
+      great_great_great_great_great_great_great_grand_children
+    ]
   end
 
+# recursive metaprogramming blahh
+  # def recur(counter=free_spaces)
+  #   return if counter < 0
+  #   send("#{counter * "great_"}grand_children")
+  #   recur(counter-=1)
+  # end
 
-#  this is currying. we curry the function nine levels deep?
-#  can we curry it dynamically - i.e only 4 levels deep if the board is smaller etc
-#  To DO : Curry dat function
-@game_state.children.map do |a|
-  a.children.map do |b|
-    b.children.map do |d|
-      d.children.map do |e|
-        e.children.map do |f|
-          f.children.map do |e|
-            e.children.map do |f|
-              f.children.map do |g|
-                g.children
-              end
-            end
-          end
-        end
-      end
-    end
+  def grand_children
+    @grand_children ||= game_state.children.map { |child| child.children }.flatten
   end
-end
 
-  private
-
-  def other_player
-    @game_state.other_player
+  def great_grand_children
+    @great_grand_children  ||= grand_children.map { |child| child.children }.flatten
   end
+
+  def great_great_grand_children
+    @great_great_grand_children ||= great_grand_children.map { |child| child.children }.flatten
+  end
+
+  def great_great_great_grand_children
+    @great_great_great_grand_children ||= great_great_grand_children.map { |child| child.children }.flatten
+  end
+
+  def great_great_great_great_grand_children
+    @great_great_great_great_grand_children ||= great_great_great_grand_children.map { |child| child.children }.flatten
+  end
+
+  def great_great_great_great_great_grand_children
+    @great_great_great_great_great_grand_children ||= great_great_great_great_grand_children.map { |child| child.children }.flatten
+  end
+
+  def great_great_great_great_great_great_grand_children
+    @great_great_great_great_great_great_grand_children ||= great_great_great_great_great_grand_children.map { |child| child.children }.flatten
+  end
+
+  def great_great_great_great_great_great_great_grand_children
+    @great_great_great_great_great_great_great_grand_children ||= great_great_great_great_great_great_grand_children.map { |child| child.children }.flatten
+  end
+
+  attr_reader :game_state, :routes
 
   def board
-    @game_state.board
+    game_state.board
   end
 end

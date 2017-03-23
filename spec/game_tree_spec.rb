@@ -3,8 +3,8 @@ RSpec.describe GameTree do
     subject { described_class.new(GameState.new('X', Board.new)) }
 
     it 'generates the game tree' do
-      subject.tree
-      expect(subject.game_tree).to eq 1
+      binding.pry
+      expect(subject.tree).to eq 1
     end
   end
 end
